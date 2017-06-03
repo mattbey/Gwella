@@ -1,0 +1,82 @@
+<!-- Validation failure messages -->
+<% if @profile.errors.any? %>
+  <% @profile.errors.full_messages.each do |message| %>
+    <div class="alert alert-dismissable alert-danger">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      <%= message %>
+    </div>
+  <% end %>
+<% end %>
+
+<div class="page-header">
+  <h3>Edit Profile #<%= @profile.id %></h3>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <form action="/update_profile/<%= @profile.id %>" method="post">
+      <!-- Hidden input for authenticity token to protect from forgery -->
+      <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+
+      <!-- Label and input for username -->
+      <div class="form-group">
+        <label for="username" class="control-label">
+          Username
+        </label>
+
+        <input type="text" id="username" name="username" placeholder="Username" class="form-control" value="<%= @profile.username %>">
+      </div>
+
+      <!-- Label and input for city -->
+      <div class="form-group">
+        <label for="city" class="control-label">
+          City
+        </label>
+
+        <textarea id="city" name="city" placeholder="City" class="form-control" rows="3"><%= @profile.city %></textarea>
+      </div>
+
+      <!-- Label and input for state -->
+      <div class="form-group">
+        <label for="state" class="control-label">
+          State
+        </label>
+
+        <textarea id="state" name="state" placeholder="State" class="form-control" rows="3"><%= @profile.state %></textarea>
+      </div>
+
+      <!-- Label and input for country -->
+      <div class="form-group">
+        <label for="country" class="control-label">
+          Country
+        </label>
+
+        <textarea id="country" name="country" placeholder="Country" class="form-control" rows="3"><%= @profile.country %></textarea>
+      </div>
+
+      <!-- Label and input for interests -->
+      <div class="form-group">
+        <label for="interests" class="control-label">
+          Interests
+        </label>
+
+        <textarea id="interests" name="interests" placeholder="Interests" class="form-control" rows="3"><%= @profile.interests %></textarea>
+      </div>
+
+      <!-- Label and input for user_id -->
+      <div class="form-group">
+        <label for="user_id" class="control-label">
+          User
+        </label>
+
+        <input type="text" id="user_id" name="user_id" placeholder="User" class="form-control" value="<%= @profile.user_id %>">
+      </div>
+
+      <button class="btn btn-warning">
+        Update Profile
+      </button>
+      or
+      <a href="/profiles/<%= @profile.id %>">Cancel</a>
+    </form>
+  </div>
+</div>

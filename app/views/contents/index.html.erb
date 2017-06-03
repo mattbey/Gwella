@@ -1,0 +1,34 @@
+<div class="page-header">
+  <h1>
+    Contents
+    <a href="/contents/new" class="btn btn-lg btn-success">New Content</a>
+  </h1>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <table class="table table-striped table-hover">
+      <tr>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Video</th>
+        <th>Url</th>
+        <th>Actions</th>
+      </tr>
+
+      <% @contents.each do |content| %>
+      <tr>
+        <td><%= content.title %></td>
+        <td><%= content.description %></td>
+        <td><%= content.video_id %></td>
+        <td><%= content.url %></td>
+        <td>
+          <a href="/contents/<%= content.id %>" class="btn btn-primary">Show</a>
+          <a href="/contents/<%= content.id %>/edit" class="btn btn-warning">Edit</a>
+          <a href="/delete_content/<%= content.id %>" class="btn btn-danger" rel="nofollow">Delete</a>
+        </td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
