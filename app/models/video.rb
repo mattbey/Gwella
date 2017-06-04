@@ -4,5 +4,10 @@ class Video < ApplicationRecord
   has_many :contents, :dependent => :destroy
   has_many :favorites, :dependent => :destroy
   has_many :comments, :dependent => :destroy
-  
+  has_many :fans, :through => :favorites, :source => :user
+
+  validates :user, :presence => true
+  validates :url, :presence => true
+
+default_scope { order("created_at DESC") }
 end

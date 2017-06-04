@@ -1,28 +1,138 @@
+<div class="page-header">
 
-<div class="row">
-  <div class="col-md-12">
-    <table class="table table-striped table-hover">
-      <tr>
-        <th>Title</th>
-        <th>Url</th>
-        <th>Description</th>
-        <th>User</th>
-        <th>Actions</th>
-      </tr>
-
-      <% @videos.each do |video| %>
-      <tr>
-        <td><%= video.title %></td>
-        <td><%= video.url %></td>
-        <td><%= video.description %></td>
-        <td><%= video.user_id %></td>
-        <td>
-          <a href="/videos/<%= video.id %>" class="btn btn-primary">Show</a>
-          <a href="/videos/<%= video.id %>/edit" class="btn btn-warning">Edit</a>
-          <a href="/delete_video/<%= video.id %>" class="btn btn-danger" rel="nofollow">Delete</a>
-        </td>
-      </tr>
-      <% end %>
-    </table>
+  <a href="/videos/new" class="btn btn-lg btn-success">
+    <i class="fa fa-plus"></i></a>
   </div>
-</div>
+
+  <% @videos.each do |video| %>
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            <%= video.title %>
+            <small>
+            Added  <%= time_ago_in_words(video.created_at) %> ago
+            </small>
+          </h3>
+        </div>
+
+        <div class="panel-body">
+          <a href="/videos/<%= video.id %>">
+            <iframe width="720" height="515" src="<%= video.url.html_safe %>" frameborder="0" allowfullscreen></iframe>"
+          </a>
+
+          <p>
+            <% favorite = Favorite.find_by(:video_id => video.id, :user_id => current_user.id) %>
+            <% if favorite.present? %>
+            <a href="/delete_favorite/<%= favorite.id %>" class="btn btn-link">
+              <i class="fa fa-heart"></i>
+            </a>
+            <% if video.fans.any? %>
+            <%= video.fans.pluck(:username).to_sentence %>
+            <%= video.fans.many? ? "favorite" : "favorites" %>
+            this
+            <% end %>
+            <% else %>
+            <form action="/create_favorite" method="post">
+              <!-- Hidden input for authenticity token to protect from forgery -->
+              <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+
+              <input type="hidden" name="video_id" value="<%= video.id %>">
+
+              <input type="hidden" name="user_id" value="<%= current_user.id %>">
+
+              <button class="btn btn-link">
+                <i class="fa fa-heart-o"></i>
+              </button>
+
+              <% if video.fans.any? %>
+              <%= video.fans.pluck(:username).to_sentence %>
+              <%= video.fans.many? ? "favorite" : "favorites" %>
+              this
+              <% else %>
+              <small class="text-muted">be the first to favorite this</small>
+              <% end %>
+            </form>
+            <% end %>
+          </p>
+
+          <ul class="media-list">
+
+            <% if video.description.present? %>
+            <li class="media">
+              <div class="media-body">
+
+                <%= video.description %>
+              </div>
+            </li>
+            <% end %>
+
+            <% video.comments.each do |comment| %>
+            <li class="media">
+              <div class="media-body">
+                <h6 class="media-heading">
+                  <%= link_to comment.user.username, "/users/#{comment.user.id}" %>
+                  <small>
+                    <%= time_ago_in_words(comment.created_at) %> ago
+                    <% if comment.user == current_user %>
+                    <a href="/delete_comment/<%= comment.id %>">
+                      <i class="fa fa-trash"></i>
+                    </a>
+                    <% end %>
+                  </small>
+                </h6>
+                <%= comment.comment %>
+              </div>
+            </li>
+            <% end %>
+
+            <li class="media">
+              <div class="media-body">
+                <form action="/create_comment" method="post">
+                  <!-- Hidden input for authenticity token to protect from forgery -->
+                  <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+
+                  <input type="hidden" name="video_id" value="<%= video.id %>">
+
+                  <input type="hidden" name="user_id" value="<%= current_user.id %>">
+
+                  <!-- Label and input for body -->
+                  <div class="form-group">
+                    <label for="body" class="sr-only">
+                      Body
+                    </label>
+
+                    <div class="input-group">
+                      <input type="text" id="body" name="body" class="form-control" placeholder="Add a comment..." required>
+
+                      <span class="input-group-btn">
+                        <button class="btn btn-link">
+                          <i class="fa fa-commenting-o"></i>
+                        </button>
+                      </span>
+                    </div><!-- /input-group -->
+                  </div>
+                </form>
+              </div>
+            </li>
+          </ul>
+          <div class="btn-group btn-group-justified">
+            <a href="/videos" class="btn btn-primary">
+              <i class="fa fa-chevron-left"></i>
+            </a>
+            <% if video.user_id == current_user.id %>
+            <a href="/videos/<%= video.id %>/edit" class="btn btn-warning">
+              <i class="fa fa-edit"></i>
+            </a>
+            <a href="/delete_video/<%= video.id %>" class="btn btn-danger">
+              <i class="fa fa-trash-o"></i>
+            </a>
+            <% else %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <% end %>

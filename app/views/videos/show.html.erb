@@ -9,12 +9,12 @@
       <dd><%= @video.title %></dd>
 
       <dt>Url</dt>
-      <dd><%= @video.url %></dd>
+      <dd><%= @video.url.html_safe %></dd>
 
       <dt>Description</dt>
       <dd><%= @video.description %></dd>
 
-      <dt>User</dt>
+      <dt>User</dt> 
       <dd><%= @video.user_id %></dd>
 
     </dl>
