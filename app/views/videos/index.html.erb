@@ -1,7 +1,7 @@
 <div class="page-header">
 
   <a href="/videos/new" class="btn btn-lg btn-success">
-    <i class="fa fa-plus"></i></a>
+    Add a video <i class="fa fa-fw fa-plus"></i></a>
   </div>
 
   <% @videos.each do |video| %>
@@ -30,8 +30,8 @@
             </a>
             <% if video.fans.any? %>
             <%= video.fans.pluck(:username).to_sentence %>
+            added to
             <%= video.fans.many? ? "favorite" : "favorites" %>
-            this
             <% end %>
             <% else %>
             <form action="/create_favorite" method="post">
@@ -43,7 +43,7 @@
               <input type="hidden" name="user_id" value="<%= current_user.id %>">
 
               <button class="btn btn-link">
-                <i class="fa fa-heart-o"></i>
+                Add to favorites <i class="fa fa-heart-o"></i>
               </button>
 
               <% if video.fans.any? %>
@@ -118,10 +118,10 @@
             </li>
           </ul>
           <div class="btn-group btn-group-justified">
+            <% if video.user_id == current_user.id %>
             <a href="/videos" class="btn btn-primary">
               <i class="fa fa-chevron-left"></i>
             </a>
-            <% if video.user_id == current_user.id %>
             <a href="/videos/<%= video.id %>/edit" class="btn btn-warning">
               <i class="fa fa-edit"></i>
             </a>
@@ -129,6 +129,9 @@
               <i class="fa fa-trash-o"></i>
             </a>
             <% else %>
+            <a href="/videos" class="btn btn-primary">
+              <i class="fa fa-chevron-left"></i>
+            </a>
             <% end %>
           </div>
         </div>

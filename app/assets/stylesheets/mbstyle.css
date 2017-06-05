@@ -1,0 +1,5 @@
+.top-cover {
+  background: url("globe.jpg") no-repeat center bottom;
+  background-size: cover;
+  height: 440px;
+}
