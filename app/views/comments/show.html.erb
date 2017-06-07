@@ -1,17 +1,15 @@
 <div class="page-header">
-  <h3>Comment #<%= @comment.id %></h3>
+  <h3>Thanks for commenting on this video!</h3>
 </div>
 
 <div class="row">
   <div class="col-md-12 mb-2">
     <dl class="dl-horizontal">
-      <dt>Video</dt>
-      <dd><%= @comment.video_id %></dd>
+      <input type="hidden" value"= <%= @comment.video_id %>">
 
-      <dt>User</dt>
-      <dd><%= @comment.user_id %></dd>
+      <input type="hidden" value="<%= @comment.user_id %>">
 
-      <dt>Comment</dt>
+      <dt>Your comment</dt>
       <dd><%= @comment.comment %></dd>
 
     </dl>

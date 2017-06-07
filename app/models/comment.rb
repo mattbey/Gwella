@@ -4,8 +4,8 @@ class Comment < ApplicationRecord
   belongs_to :video
 
 
-  validates :user, :presence => true
-  validates :video, :presence => true
+  validates :user_id, :presence => true
+  validates :video_id, :presence => true
   validates :comment, :presence => true
 
 end

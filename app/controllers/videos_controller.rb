@@ -5,8 +5,8 @@ class VideosController < ApplicationController
     end
 
   def index
-    @videos = Video.all
-
+    @q = Video.ransack(params[:q])
+    @videos = @q.result
     render("videos/index.html.erb")
   end
 

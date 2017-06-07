@@ -3,7 +3,10 @@ class Favorite < ApplicationRecord
   belongs_to :user
   belongs_to :video
 
-  validates :user, :presence => true
-  validates :video, :presence => true, :uniqueness => { :scope => :user }
+  validates :user_id, :presence => true
+  validates :video_id, :presence => true, :uniqueness => { :scope => :user_id }
+
+  validates :video_id, :uniqueness => {:scope => :user_id, :message => "already bookmarked"}
+
 
 end
