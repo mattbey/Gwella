@@ -15,7 +15,7 @@
       </div>
       <div class="panel-body">
         <a href="/favorites/<%= favorite.video.id %>">
-          <iframe width="720" height="515" src="<%= favorite.video.url.html_safe %>" frameborder="0" allowfullscreen></iframe>"
+          <iframe width="720" height="515" src="<%= favorite.video.url.html_safe %>" frameborder="0" allowfullscreen></iframe>
         </a>
 
         <ul class="media-list">
@@ -23,7 +23,7 @@
             <div class="media-body">
               <h3 class="panel-title">
                 Added by
-                <%= favorite.video.user %></h3>
+                <%= favorite.video.user.username %></h3>
               </div>
               <div class="btn-group btn-group-justified">
                 <a href="/delete_favorite/<%= favorite.id %>" class="btn btn-danger" rel="nofollow">Delete</a>

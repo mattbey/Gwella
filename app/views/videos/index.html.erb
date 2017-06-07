@@ -1,9 +1,13 @@
 <div class="page-header">
 
+  <h2>Welcome to Gwella! | Where people help people find inspiration. | You're not alone!</h2></div>
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+
   <a href="/videos/new" class="btn btn-lg btn-success">
     Add a video <i class="fa fa-fw fa-plus"></i></a>
   </div>
-
+</div>
   <% @videos.each do |video| %>
   <div class="row">
     <div class="col-md-8 col-md-offset-2">
@@ -19,7 +23,7 @@
 
         <div class="panel-body">
           <a href="/videos/<%= video.id %>">
-            <iframe width="720" height="515" src="<%= video.url.html_safe %>" frameborder="0" allowfullscreen></iframe>"
+            <iframe width="720" height="515" src="<%= video.url.html_safe %>" frameborder="0" allowfullscreen></iframe>
           </a>
 
           <p>
@@ -31,7 +35,7 @@
             <% if video.fans.any? %>
             <%= video.fans.pluck(:username).to_sentence %>
             added to
-            <%= video.fans.many? ? "favorite" : "favorites" %>
+            <%= video.fans.many? ? "favorites" : "favorites" %>
             <% end %>
             <% else %>
             <form action="/create_favorite" method="post">
@@ -48,10 +52,10 @@
 
               <% if video.fans.any? %>
               <%= video.fans.pluck(:username).to_sentence %>
-              <%= video.fans.many? ? "favorite" : "favorites" %>
-              this
+              added to
+              <%= video.fans.many? ? "favorites" : "favorites" %>
               <% else %>
-              <small class="text-muted">be the first to favorite this</small>
+              <small class="text-muted">be the first to add to favorites</small>
               <% end %>
             </form>
             <% end %>
@@ -80,12 +84,12 @@
                       <i class="fa fa-trash"></i>
                     </a>
                     <% end %>
-                  </small>
-                </h6>
-                <%= comment.comment %>
-              </div>
-            </li>
-            <% end %>
+                </small>
+              </h6>
+              <%= comment.comment %>
+            </div>
+          </li>
+          <% end %>
 
             <li class="media">
               <div class="media-body">
@@ -97,14 +101,13 @@
 
                   <input type="hidden" name="user_id" value="<%= current_user.id %>">
 
-                  <!-- Label and input for body -->
                   <div class="form-group">
-                    <label for="body" class="sr-only">
-                      Body
+                    <label for="comment" class="sr-only">
+                      Comment
                     </label>
 
                     <div class="input-group">
-                      <input type="text" id="body" name="body" class="form-control" placeholder="Add a comment..." required>
+                      <input type="text" id="comment" name="comment" class="form-control" placeholder="Add a comment..." required>
 
                       <span class="input-group-btn">
                         <button class="btn btn-link">

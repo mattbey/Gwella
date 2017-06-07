@@ -1,28 +1,28 @@
 <div class="page-header">
-  <h3>Favorite #<%= @favorite.id %></h3>
+  <h3>Awesome - A New Favorite Video!</h3>
 </div>
 
 <div class="row">
-  <div class="col-md-12 mb-2">
-    <dl class="dl-horizontal">
-      <dt>Video</dt>
-      <dd><%= @favorite.video_id %></dd>
-
-      <dt>User</dt>
-      <dd><%= @favorite.user_id %></dd>
-
-    </dl>
-
-    <div class="btn-group btn-group-justified">
-      <a href="/favorites" class="btn btn-primary">
-        Back
-      </a>
-      <a href="/favorites/<%= @favorite.id %>/edit" class="btn btn-warning">
-        Edit
-      </a>
-      <a href="/delete_favorite/<%= @favorite.id %>" class="btn btn-danger" rel="nofollow">
-        Delete
-      </a>
+  <div class="col-md-8 col-md-offset-2">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          <dd><%= @favorite.video.title %></dd></h3>
+        </div>
+        <div class="panel-body">
+          <a href="/favorites/<%= @favorite.video.id %>">
+            <iframe width="720" height="515" src="<%= @favorite.video.url.html_safe %>" frameborder="0" allowfullscreen></iframe>
+          </a>
+        </div>
+        <div class="btn-group btn-group-justified">
+          <a href="/favorites" class="btn btn-primary">
+            Back
+          </a>
+          <a href="/delete_favorite/<%= @favorite.id %>" class="btn btn-danger" rel="nofollow">
+            Delete
+          </a>
+        </div>
+      </div>
     </div>
   </div>
 </div>

@@ -1,4 +1,9 @@
 class VideosController < ApplicationController
+
+  def my_favorites
+      @video = current_user.favorites
+    end
+
   def index
     @videos = Video.all
 

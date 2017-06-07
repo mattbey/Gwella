@@ -5,9 +5,11 @@ Rails.application.routes.draw do
 
   root to: "videos#index"
 
+  get "/my_favorites", :controller => "videos", :action => "my_favorites"
+
   get "/users", :controller => "users", :action => "index"
   get "/users/:id", :controller => "users", :action => "show"
-  
+
   # Routes for the Comment resource:
   # CREATE
   get "/comments/new", :controller => "comments", :action => "new"
