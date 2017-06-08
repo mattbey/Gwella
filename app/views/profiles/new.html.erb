@@ -9,7 +9,7 @@
 <% end %>
 
 <div class="page-header">
-  <h3>Add Profile</h3>
+  <h3>Add infomation to your profile</h3>
 </div>
 
 <div class="row">
@@ -24,7 +24,7 @@
           Username
         </label>
 
-        <input type="text" id="username" name="username" placeholder="Username" class="form-control" value="<%= @profile.username %>">
+        <input type="text" id="username" name="username" placeholder="Username" class="form-control" value="<%= current_user.username %>">
       </div>
 
       <!-- Label and input for city -->
@@ -65,11 +65,9 @@
 
       <!-- Label and input for user_id -->
       <div class="form-group">
-        <label for="user_id" class="control-label">
-          User
-        </label>
 
-        <input type="text" id="user_id" name="user_id" placeholder="User" class="form-control" value="<%= @profile.user_id %>">
+
+        <input type="hidden" id="user_id" name="user_id" placeholder="User" class="form-control" value="<%= current_user.id %>">
       </div>
 
       <button class="btn btn-success">

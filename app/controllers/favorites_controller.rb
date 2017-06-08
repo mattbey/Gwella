@@ -6,7 +6,7 @@ class FavoritesController < ApplicationController
   end
 
   def show
-    @favorite = Favorite.find(params[:id])
+    @favorite = Favorite.find_by(user_id: params[:id])
 
     render("favorites/show.html.erb")
   end
