@@ -14,20 +14,20 @@
 
   <div class="row">
     <div class="col-md-8 col-md-offset-2">
-  <%= search_form_for @q do |f| %>
-    <p class="lead">Narrow video results:</p>
+      <%= search_form_for @q do |f| %>
+      <p class="lead">Narrow video results:</p>
 
-    <div class="form-group">
-      <%= f.label :title_cont, "Title containing" %>
-      <%= f.text_field :title_cont, :class => "form-control", :placeholder => "Enter a few characters" %>
+      <div class="form-group">
+        <%= f.label :title_cont, "Title containing" %>
+        <%= f.text_field :title_cont, :class => "form-control", :placeholder => "Enter a few characters" %>
+      </div>
+      <%= f.submit :class => "btn btn-primary btn-block" %>
+
+      <a href="/videos" class="btn btn-default btn-block">Clear filters</a>
+      <% end %>
+      <hr>
     </div>
-    <%= f.submit :class => "btn btn-primary btn-block" %>
-
-    <a href="/videos" class="btn btn-default btn-block">Clear filters</a>
-  <% end %>
-<hr>
-</div>
-</div>
+  </div>
 
   <% @videos.each do |video| %>
   <div class="row">
@@ -37,7 +37,7 @@
           <h3 class="panel-title">
             <%= video.title %>
             <small>
-            Added  <%= time_ago_in_words(video.created_at) %> ago
+              Added  <%= time_ago_in_words(video.created_at) %> ago
             </small>
           </h3>
         </div>
@@ -105,12 +105,12 @@
                       <i class="fa fa-trash"></i>
                     </a>
                     <% end %>
-                </small>
-              </h6>
-              <%= comment.comment %>
-            </div>
-          </li>
-          <% end %>
+                  </small>
+                </h6>
+                <%= comment.comment %>
+              </div>
+            </li>
+            <% end %>
 
             <li class="media">
               <div class="media-body">
@@ -163,6 +163,8 @@
     </div>
   </div>
   <% end %>
+
+  <hr>
   <div class="row4"><center>
     <div class="col-md-3">
       <h4>Gwella</h4>
@@ -192,4 +194,4 @@
       <ul>Twitter</ul>
     </div>
   </center>
-  </div>
+</div>

@@ -1,25 +1,64 @@
 <div class="page-header">
-  <h3><%= current_user.username %>'s Profile!</h3>
+  <h3>Upload a profile picture!</h3>
 </div>
 
 <div class="row">
-  <div class="col-md-12 mb-2">
-    <dl class="dl-horizontal">
-      <dt>Username</dt>
-      <dd><%= @profile.username %></dd>
+  <div class="col-md-12">
+    <div class="jumbotron">
+      <h2>
+        <%= @profile.username %>
+      </h2>
+    </div>
 
-      <dt>City</dt>
-      <dd><%= @profile.city %></dd>
+      <div class="row">
+        <div class="col-md-6">
+          <h3>
+            Where I'm From
+          </h3>
+          <p>
+            <dt>City</dt>
+            <dd><%= @profile.city %></dd>
 
-      <dt>State</dt>
-      <dd><%= @profile.state %></dd>
+            <dt>State</dt>
+            <dd><%= @profile.state %></dd>
 
-      <dt>Country</dt>
-      <dd><%= @profile.country %></dd>
+            <dt>Country</dt>
+            <dd><%= @profile.country %></dd>
+          </p>
+        </div>
+        <div class="col-md-6">
+          <h3>
+            What I Like to Do
+          </h3>
 
-      <dt>Interests</dt>
-      <dd><%= @profile.interests %></dd>
+          <%= @profile.interests %>
 
+        </div>
+      </div>
+      <hr>
+<center>
+      <div class="row">
+
+        <div class="col-md-4">
+          <p class="lead">
+            <%= @profile.user.videos.count %> posts
+          </p>
+        </div>
+
+        <div class="col-md-4">
+          <p class="lead">
+            I inspire <%= @profile.user.favorites.count %> people
+          </p>
+        </div>
+
+        <div class="col-md-4">
+          <p class="lead">
+            <%= @profile.user.favorites.count %> people inspire me
+          </p>
+        </div>
+      </div>
+</center>
+      <hr>
       <input type="hidden"  value="<%= @profile.user_id %>">
 
 
@@ -44,6 +83,7 @@
     </div>
   </div>
 </div>
+<hr>
 <div class="row4"><center>
   <div class="col-md-3">
     <h4>Gwella</h4>
