@@ -94,6 +94,7 @@ Rails.application.routes.draw do
   # DELETE
   get "/delete_video/:id", :controller => "videos", :action => "destroy"
   #------------------------------
+  get "/about_us", :controller => "users", :action => "about_us"
 
 
 end

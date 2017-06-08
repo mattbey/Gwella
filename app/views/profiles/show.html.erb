@@ -26,15 +26,51 @@
     </dl>
 
     <div class="btn-group btn-group-justified">
-      <a href="/profiles" class="btn btn-primary">
-        Back
+      <% if @profile.user_id == current_user.id %>
+      <a href="/users" class="btn btn-primary">
+        <i class="fa fa-chevron-left"></i>
       </a>
       <a href="/profiles/<%= @profile.id %>/edit" class="btn btn-warning">
-        Edit
+        <i class="fa fa-edit"></i>
       </a>
-      <a href="/delete_profile/<%= @profile.id %>" class="btn btn-danger" rel="nofollow">
-        Delete
+      <a href="/delete_profile/<%= @profile.id %>" class="btn btn-danger">
+        <i class="fa fa-trash-o"></i>
       </a>
+      <% else %>
+      <a href="/users" class="btn btn-primary">
+        <i class="fa fa-chevron-left"></i>
+      </a>
+      <% end %>
     </div>
   </div>
+</div>
+<div class="row4"><center>
+  <div class="col-md-3">
+    <h4>Gwella</h4>
+    <ul>Mobile apps</ul>
+    <ul>Community</ul>
+    <ul>Security</ul>
+  </div>
+  <div class="col-md-3">
+
+    <h4>Company</h4>
+    <ul><a href="/about_us">About us</a></ul>
+    <ul>Careers</ul>
+    <ul>Press</ul>
+
+  </div>
+  <div class="col-md-3">
+    <h4>Support</h4>
+    <ul>Help Center</ul>
+    <ul>Contact</ul>
+    <ul>Privacy & terms</ul>
+  </div>
+
+  <div class="col-md-3">
+    <h4>Connect</h4>
+    <ul><a href="https://www.facebook.com/Gwella-1504815782924804/" target="blank">Facebook</a></ul>
+    <ul>Instragram</ul>
+    <ul>Twitter</ul>
+  </div>
+</center>
 </div>
