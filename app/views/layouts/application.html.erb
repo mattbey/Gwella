@@ -58,7 +58,7 @@
           </li>
                 <% if current_user.present? %>
           <li>
-            <a href="/my_favorites">
+            <a href="/favorites/<%= current_user.id %>">>
               <i class="fa fa-fw fa-heart"></i>
               <span class="hidden-sm">
                 My Favorites
