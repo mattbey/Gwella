@@ -1,197 +1,219 @@
-<div class="page-header">
+<link rel="stylesheet" href="mb_styles.css">
+<div class="row">
+  <div class="colspan-12 top-cover">
 
-  <center><h2>Welcome to Gwella!  |  Where people help people find inspiration.  |  No one is alone.</h2></center></div>
+    <table class="cover-content">
+      <tr>
+        <td class="cover-cell">
+         <h1 class="cover-heading">Welcome to Gwella! </h1>
+           <h2 <p>  Where people help people find inspiration. </p </h2>
+              <h2 <p>  No one is alone.</p </h2>
 
-  <div class="row">
-    <div class="col-md-8 col-md-offset-2">
-      <a href="/videos/new" class="btn btn-default btn-block">
-        Add A Video <i class="fa fa-fw fa-plus"></i> Share Your Story
-      </a>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
 
-      <hr>
-    </div>
+<div class="row">
+  <div class="col-md-2">
+    $ AD SPACE $
   </div>
 
-  <div class="row">
-    <div class="col-md-8 col-md-offset-2">
-      <%= search_form_for @q do |f| %>
-      <p class="lead">Narrow video results:</p>
+  <div class="col-md-2 col-md-offset-8">
+    $ AD SPACE $
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-8 col-md-offset-2">
+    <a href="/videos/new" class="btn btn-default btn-block">
+      Add A Video <i class="fa fa-fw fa-plus"></i> Share Your Story
+    </a>
 
-      <div class="form-group">
-        <%= f.label :title_cont, "Title containing" %>
-        <%= f.text_field :title_cont, :class => "form-control", :placeholder => "Enter a few characters" %>
+    <hr>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-8 col-md-offset-2">
+    <%= search_form_for @q do |f| %>
+    <p class="lead">Narrow video results:</p>
+
+    <div class="form-group">
+      <%= f.label :title_cont, "Title containing" %>
+      <%= f.text_field :title_cont, :class => "form-control", :placeholder => "Enter a few characters" %>
+    </div>
+    <%= f.submit :class => "btn btn-primary btn-block" %>
+
+    <a href="/videos" class="btn btn-default btn-block">Clear filters</a>
+    <% end %>
+    <hr>
+  </div>
+</div>
+
+<% @videos.each do |video| %>
+<div class="row">
+  <div class="col-md-8 col-md-offset-2">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          <%= video.title %>
+          <small>
+            Added  <%= time_ago_in_words(video.created_at) %> ago
+          </small>
+        </h3>
       </div>
-      <%= f.submit :class => "btn btn-primary btn-block" %>
 
-      <a href="/videos" class="btn btn-default btn-block">Clear filters</a>
-      <% end %>
-      <hr>
-    </div>
-  </div>
+      <div class="panel-body">
+        <a href="/videos/<%= video.id %>">
+          <iframe width="720" height="515" src="<%= video.url.html_safe %>" frameborder="0" allowfullscreen></iframe>
+        </a>
 
-  <% @videos.each do |video| %>
-  <div class="row">
-    <div class="col-md-8 col-md-offset-2">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title">
-            <%= video.title %>
-            <small>
-              Added  <%= time_ago_in_words(video.created_at) %> ago
-            </small>
-          </h3>
-        </div>
-
-        <div class="panel-body">
-          <a href="/videos/<%= video.id %>">
-            <iframe width="720" height="515" src="<%= video.url.html_safe %>" frameborder="0" allowfullscreen></iframe>
+        <p>
+          <% favorite = Favorite.find_by(:video_id => video.id, :user_id => current_user.id) %>
+          <% if favorite.present? %>
+          <a href="/delete_favorite/<%= favorite.id %>" class="btn btn-link">
+            <i class="fa fa-heart"></i>
           </a>
+          <% if video.fans.any? %>
+          <%= video.fans.pluck(:username).to_sentence %>
+          added to
+          <%= video.fans.many? ? "favorites" : "favorites" %>
+          <% end %>
+          <% else %>
+          <form action="/create_favorite" method="post">
+            <!-- Hidden input for authenticity token to protect from forgery -->
+            <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
 
-          <p>
-            <% favorite = Favorite.find_by(:video_id => video.id, :user_id => current_user.id) %>
-            <% if favorite.present? %>
-            <a href="/delete_favorite/<%= favorite.id %>" class="btn btn-link">
-              <i class="fa fa-heart"></i>
-            </a>
+            <input type="hidden" name="video_id" value="<%= video.id %>">
+
+            <input type="hidden" name="user_id" value="<%= current_user.id %>">
+
+            <button class="btn btn-link">
+              Add to favorites <i class="fa fa-heart-o"></i>
+            </button>
+
             <% if video.fans.any? %>
             <%= video.fans.pluck(:username).to_sentence %>
             added to
             <%= video.fans.many? ? "favorites" : "favorites" %>
-            <% end %>
             <% else %>
-            <form action="/create_favorite" method="post">
-              <!-- Hidden input for authenticity token to protect from forgery -->
-              <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
-
-              <input type="hidden" name="video_id" value="<%= video.id %>">
-
-              <input type="hidden" name="user_id" value="<%= current_user.id %>">
-
-              <button class="btn btn-link">
-                Add to favorites <i class="fa fa-heart-o"></i>
-              </button>
-
-              <% if video.fans.any? %>
-              <%= video.fans.pluck(:username).to_sentence %>
-              added to
-              <%= video.fans.many? ? "favorites" : "favorites" %>
-              <% else %>
-              <small class="text-muted">be the first to add to favorites</small>
-              <% end %>
-            </form>
+            <small class="text-muted">be the first to add to favorites</small>
             <% end %>
-          </p>
+          </form>
+          <% end %>
+        </p>
 
-          <ul class="media-list">
+        <ul class="media-list">
 
-            <% if video.description.present? %>
-            <li class="media">
-              <div class="media-body">
+          <% if video.description.present? %>
+          <li class="media">
+            <div class="media-body">
 
-                <%= video.description %>
-              </div>
-            </li>
-            <% end %>
+              <%= video.description %>
+            </div>
+          </li>
+          <% end %>
 
-            <% video.comments.each do |comment| %>
-            <li class="media">
-              <div class="media-body">
-                <h6 class="media-heading">
-                  <%= link_to comment.user.username, "/users/#{comment.user.id}" %>
-                  <small>
-                    <%= time_ago_in_words(comment.created_at) %> ago
-                    <% if comment.user == current_user %>
-                    <a href="/delete_comment/<%= comment.id %>">
-                      <i class="fa fa-trash"></i>
-                    </a>
-                    <% end %>
-                  </small>
-                </h6>
-                <%= comment.comment %>
-              </div>
-            </li>
-            <% end %>
+          <% video.comments.each do |comment| %>
+          <li class="media">
+            <div class="media-body">
+              <h6 class="media-heading">
+                <%= link_to comment.user.username, "/users/#{comment.user.id}" %>
+                <small>
+                  <%= time_ago_in_words(comment.created_at) %> ago
+                  <% if comment.user == current_user %>
+                  <a href="/delete_comment/<%= comment.id %>">
+                    <i class="fa fa-trash"></i>
+                  </a>
+                  <% end %>
+                </small>
+              </h6>
+              <%= comment.comment %>
+            </div>
+          </li>
+          <% end %>
 
-            <li class="media">
-              <div class="media-body">
-                <form action="/create_comment" method="post">
-                  <!-- Hidden input for authenticity token to protect from forgery -->
-                  <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+          <li class="media">
+            <div class="media-body">
+              <form action="/create_comment" method="post">
+                <!-- Hidden input for authenticity token to protect from forgery -->
+                <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
 
-                  <input type="hidden" name="video_id" value="<%= video.id %>">
+                <input type="hidden" name="video_id" value="<%= video.id %>">
 
-                  <input type="hidden" name="user_id" value="<%= current_user.id %>">
+                <input type="hidden" name="user_id" value="<%= current_user.id %>">
 
-                  <div class="form-group">
-                    <label for="comment" class="sr-only">
-                      Comment
-                    </label>
+                <div class="form-group">
+                  <label for="comment" class="sr-only">
+                    Comment
+                  </label>
 
-                    <div class="input-group">
-                      <input type="text" id="comment" name="comment" class="form-control" placeholder="Add a comment..." required>
+                  <div class="input-group">
+                    <input type="text" id="comment" name="comment" class="form-control" placeholder="Add a comment..." required>
 
-                      <span class="input-group-btn">
-                        <button class="btn btn-link">
-                          <i class="fa fa-commenting-o"></i>
-                        </button>
-                      </span>
-                    </div><!-- /input-group -->
-                  </div>
-                </form>
-              </div>
-            </li>
-          </ul>
-          <div class="btn-group btn-group-justified">
-            <% if video.user_id == current_user.id %>
-            <a href="/videos" class="btn btn-primary">
-              <i class="fa fa-chevron-left"></i>
-            </a>
-            <a href="/videos/<%= video.id %>/edit" class="btn btn-warning">
-              <i class="fa fa-edit"></i>
-            </a>
-            <a href="/delete_video/<%= video.id %>" class="btn btn-danger">
-              <i class="fa fa-trash-o"></i>
-            </a>
-            <% else %>
-            <a href="/videos" class="btn btn-primary">
-              <i class="fa fa-chevron-left"></i>
-            </a>
-            <% end %>
-          </div>
+                    <span class="input-group-btn">
+                      <button class="btn btn-link">
+                        <i class="fa fa-commenting-o"></i>
+                      </button>
+                    </span>
+                  </div><!-- /input-group -->
+                </div>
+              </form>
+            </div>
+          </li>
+        </ul>
+        <div class="btn-group btn-group-justified">
+          <% if video.user_id == current_user.id %>
+          <a href="/videos" class="btn btn-primary">
+            <i class="fa fa-chevron-left"></i>
+          </a>
+          <a href="/videos/<%= video.id %>/edit" class="btn btn-warning">
+            <i class="fa fa-edit"></i>
+          </a>
+          <a href="/delete_video/<%= video.id %>" class="btn btn-danger">
+            <i class="fa fa-trash-o"></i>
+          </a>
+          <% else %>
+          <a href="/videos" class="btn btn-primary">
+            <i class="fa fa-chevron-left"></i>
+          </a>
+          <% end %>
         </div>
       </div>
     </div>
   </div>
-  <% end %>
+</div>
+<% end %>
 
-  <hr>
-  <div class="row4"><center>
-    <div class="col-md-3">
-      <h4>Gwella</h4>
-      <ul>Mobile apps</ul>
-      <ul>Community</ul>
-      <ul>Security</ul>
-    </div>
-    <div class="col-md-3">
+<hr>
+<div class="row4"><center>
+  <div class="col-md-3">
+    <h4>Gwella</h4>
+    <ul>Mobile apps</ul>
+    <ul>Community</ul>
+    <ul>Security</ul>
+  </div>
+  <div class="col-md-3">
 
-      <h4>Company</h4>
-      <ul><a href="/about_us">About us</a></ul>
-      <ul>Careers</ul>
-      <ul>Press</ul>
+    <h4>Company</h4>
+    <ul><a href="/about_us">About us</a></ul>
+    <ul>Careers</ul>
+    <ul>Press</ul>
 
-    </div>
-    <div class="col-md-3">
-      <h4>Support</h4>
-      <ul>Help Center</ul>
-      <ul>Contact</ul>
-      <ul>Privacy & terms</ul>
-    </div>
+  </div>
+  <div class="col-md-3">
+    <h4>Support</h4>
+    <ul>Help Center</ul>
+    <ul>Contact</ul>
+    <ul>Privacy & terms</ul>
+  </div>
 
-    <div class="col-md-3">
-      <h4>Connect</h4>
-      <ul><a href="https://www.facebook.com/Gwella-1504815782924804/" target="blank">Facebook</a></ul>
-      <ul>Instragram</ul>
-      <ul>Twitter</ul>
-    </div>
-  </center>
+  <div class="col-md-3">
+    <h4>Connect</h4>
+    <ul><a href="https://www.facebook.com/Gwella-1504815782924804/" target="blank">Facebook</a></ul>
+    <ul>Instragram</ul>
+    <ul>Twitter</ul>
+  </div>
+</center>
 </div>
