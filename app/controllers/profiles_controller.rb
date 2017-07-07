@@ -26,6 +26,7 @@ class ProfilesController < ApplicationController
     @profile.country = params[:country]
     @profile.interests = params[:interests]
     @profile.user_id = params[:user_id]
+    @profile.image = params[:image]
 
     save_status = @profile.save
 

@@ -1,80 +1,87 @@
 <!-- Validation failure messages -->
 <% if @profile.errors.any? %>
-  <% @profile.errors.full_messages.each do |message| %>
-    <div class="alert alert-dismissable alert-danger">
-      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-      <%= message %>
-    </div>
-  <% end %>
+<% @profile.errors.full_messages.each do |message| %>
+<div class="alert alert-dismissable alert-danger">
+  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+  <%= message %>
+</div>
+<% end %>
 <% end %>
 
 <div class="page-header">
-  <h3>Add infomation to your profile</h3>
+  <h3>Don't Be A Stranger - Add Infomation To Your Profile</h3>
 </div>
 
 <div class="row">
   <div class="col-md-12">
-    <form action="/create_profile" method="post">
+    <form action="/create_profile" method="post" enctype="multipart/form-data">
       <!-- Hidden input for authenticity token to protect from forgery -->
       <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
 
-      <!-- Label and input for username -->
+      <!-- Label and input for image -->
       <div class="form-group">
-        <label for="username" class="control-label">
-          Username
+        <label for="image" class="control-label">
+          Let's have a look at you!
         </label>
+        <input name="image" id="image" type="file" class="form-control">
 
-        <input type="text" id="username" name="username" placeholder="Username" class="form-control" value="<%= current_user.username %>">
-      </div>
+        <!-- Label and input for username -->
+        <div class="form-group">
+          <label for="username" class="control-label">
+            Username
+          </label>
 
-      <!-- Label and input for city -->
-      <div class="form-group">
-        <label for="city" class="control-label">
-          City
-        </label>
+          <input type="text" id="username" name="username" placeholder="Username" class="form-control" value="<%= current_user.username %>">
+        </div>
 
-        <textarea id="city" name="city" placeholder="City" class="form-control" rows="3"><%= @profile.city %></textarea>
-      </div>
+        <!-- Label and input for city -->
+        <div class="form-group">
+          <label for="city" class="control-label">
+            City
+          </label>
 
-      <!-- Label and input for state -->
-      <div class="form-group">
-        <label for="state" class="control-label">
-          State
-        </label>
+          <textarea id="city" name="city" placeholder="City" class="form-control" rows="3"><%= @profile.city %></textarea>
+        </div>
 
-        <textarea id="state" name="state" placeholder="State" class="form-control" rows="3"><%= @profile.state %></textarea>
-      </div>
+        <!-- Label and input for state -->
+        <div class="form-group">
+          <label for="state" class="control-label">
+            State
+          </label>
 
-      <!-- Label and input for country -->
-      <div class="form-group">
-        <label for="country" class="control-label">
-          Country
-        </label>
+          <textarea id="state" name="state" placeholder="State" class="form-control" rows="3"><%= @profile.state %></textarea>
+        </div>
 
-        <textarea id="country" name="country" placeholder="Country" class="form-control" rows="3"><%= @profile.country %></textarea>
-      </div>
+        <!-- Label and input for country -->
+        <div class="form-group">
+          <label for="country" class="control-label">
+            Country
+          </label>
 
-      <!-- Label and input for interests -->
-      <div class="form-group">
-        <label for="interests" class="control-label">
-          Interests
-        </label>
+          <textarea id="country" name="country" placeholder="Country" class="form-control" rows="3"><%= @profile.country %></textarea>
+        </div>
 
-        <textarea id="interests" name="interests" placeholder="Interests" class="form-control" rows="3"><%= @profile.interests %></textarea>
-      </div>
+        <!-- Label and input for interests -->
+        <div class="form-group">
+          <label for="interests" class="control-label">
+            Interests
+          </label>
 
-      <!-- Label and input for user_id -->
-      <div class="form-group">
+          <textarea id="interests" name="interests" placeholder="Interests" class="form-control" rows="3"><%= @profile.interests %></textarea>
+        </div>
+
+        <!-- Label and input for user_id -->
+        <div class="form-group">
 
 
-        <input type="hidden" id="user_id" name="user_id" placeholder="User" class="form-control" value="<%= current_user.id %>">
-      </div>
+          <input type="hidden" id="user_id" name="user_id" placeholder="User" class="form-control" value="<%= current_user.id %>">
+        </div>
 
-      <button class="btn btn-success">
-        Create Profile
-      </button>
-      or
-      <a href="/profiles">Cancel</a>
-    </form>
+        <button class="btn btn-success">
+          Create Profile
+        </button>
+        or
+        <a href="/profiles">Cancel</a>
+      </form>
+    </div>
   </div>
-</div>
